@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <style>
+      body {
+        margin: 0;
+        background-color: black;
+        width: 1024px;
+        height: 768px;
+      }
+
+      div.webcam-wrapper {
+        position: absolute;
+        top: -30px;
+        bottom: 0;
+      }
+
+      img#webcam {
+        height: 100%;
+      }
+
+      div#clock {
+        position: absolute;
+        font-size: 40px;
+        color: white;
+        font-family: 'Helvetica', 'Arial';
+        text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.75);
+        bottom: 8%;
+        left: 10%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="webcam-wrapper">
+      <img id="webcam" alt="this is the webcam" />
+    </div>
+
+    <div id="clock">current time</div>
+
+    <script>
+      const cameras = [
+        'https://www.nps.gov/webcams-glac/mcdcam2.jpg',
+        'https://www.nps.gov/webcams-glac/lakemcdonaldptz.jpg',
+        'https://www.nps.gov/webcams-glac/logan2.jpg',
+        'https://www.nps.gov/webcams-deto/deto3.jpg',
+        'https://www.nps.gov/webcams-glac/mgcam.jpg',
+      ];
+
+      const myImgElement = document.querySelector('#webcam');
+      const myClockElement = document.querySelector('#clock');
+
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+      }
+
+      function setImage() {
+        // go get a random number
+        const myRandomNumber = getRandomInt(4);
+        // use the number to get a url
+        const myRandomURL = cameras[myRandomNumber];
+        // assign the url to our img element
+        myImgElement.src = myRandomURL;
+      }
+
+      function setTime() {
+        const myDate = new Date();
+        myClockElement.innerHTML = myDate.toLocaleDateString('en', {
+          hour: 'numeric',
+          minute: 'numeric',
+        });
+      }
+
+      function reload() {
+        window.location.reload(false);
+      }
+
+      setImage();
+      setTime();
+
+      window.setInterval(() => {
+        setImage();
+        setTime();
+      }, 5000);
+
+      window.setTimeout(() => {
+        reload();
+      }, 60000);
+    </script>
+  </body>
+</html>
